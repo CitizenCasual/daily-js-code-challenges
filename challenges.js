@@ -66,8 +66,6 @@ function addTwoNumbers(number1, number2) {
     return number1 + number2
   }
 }
-
-
   // determine if both params are numbers or not.
   // if they are both numbers, add them together, return sum.
   // if one or both params are not numbers, return NaN
@@ -93,6 +91,11 @@ sumNumbers([2, 10, -5]) //=> 7
 sumNumbers([]) //=> 0
 -----------------------------------------------------------------------------*/
 // Your solution for 03-sumNumbers here:
+function sumNumbers(arr) {
+  let sum = arr.reduce((total, item) => total + item, 0)
+  return sum;
+}
+
 
 
 
