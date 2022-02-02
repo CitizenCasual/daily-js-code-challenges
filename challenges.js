@@ -91,10 +91,12 @@ sumNumbers([2, 10, -5]) //=> 7
 sumNumbers([]) //=> 0
 -----------------------------------------------------------------------------*/
 // Your solution for 03-sumNumbers here:
+
 function sumNumbers(arr) {
-  let sum = arr.reduce((total, item) => total + item, 0)
-  return sum;
+  return sum = arr.reduce((total, item) => total + item, 0)
 }
+
+
 
 
 
@@ -120,8 +122,13 @@ add(7,-12) //=> -5
 -----------------------------------------------------------------------------*/
 // Your solution for 04-addList here:
 
-
-
+function addList(...numbers) {
+  let sum = 0
+  for (let index = 0; index < numbers.length; index++) {
+    sum += numbers[index]
+  }
+  return sum
+}
 
 
 /*-----------------------------------------------------------------------------
@@ -143,6 +150,18 @@ computeRemainder(4,0) //=> Infinity
 computeRemainder(10.5, 3) //=> 1.5
 -----------------------------------------------------------------------------*/
 // Your solution for 05-computeRemainder:
+// function computeRemainder(divis, divid) {
+//   if (divid === 0) {
+//     return Infinity                        // using %
+//   } else {
+//     return divis % divid
+//   }
+// }
+
+function computeRemainder(divis, divid) {
+  return divid === 0 ? Infinity : divis - Math.floor(divis/divid) * divid;
+}         // not using %
+//Math.floor rounds down
 
 
 
@@ -166,8 +185,18 @@ range(1,1) //=> []
 range(5,2) //=> "First argument must be less than second"
 -----------------------------------------------------------------------------*/
 // Your solution for 06-range here:
-
-
+function range(x,y) {
+  let arr = []// creates empty arr for solution
+  if (x > y) { //checks if x is less than y
+    return 'First argument must be less than second'
+  } 
+  for (let z = x; z < y; z++) { 
+    arr.push(z)
+  }
+  return arr
+}
+//the loop sets z(variable) to x(argument), checks if that variable is less than y (exclusive), if it is it adds one and pushes to array.
+//the elements inbetween the two given arguments are created because we created z.
 
 
 
