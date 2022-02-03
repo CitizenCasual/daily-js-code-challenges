@@ -166,7 +166,6 @@ function computeRemainder(divis, divid) {
 
 
 
-
 /*-----------------------------------------------------------------------------
 Challenge: 06-range
 
@@ -214,7 +213,10 @@ Examples:
 reverseUpcaseString("SEI Rocks!"); //=> "!SKCOR IES" 
 -----------------------------------------------------------------------------*/
 // Your solution for 07-reverseUpcaseString here:
-
+function reverseUpcaseString(str) {
+  let newStr =  str.split('').reverse().join('') //common way to reverse
+  return newStr.toUpperCase()//takes reversed string and upcases it.
+}
 
 
 
