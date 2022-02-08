@@ -237,8 +237,23 @@ removeEnds('SEI Rocks!'); //=> "DI Rocks"
 removeEnds('a'); //=> "" (empty string)
 -----------------------------------------------------------------------------*/
 // Your solution for 08-removeEnds here:
+function removeEnds(str) {
+  if (str.length < 3) {
+    return ''
+  } else {
+    return str.slice(1, -1)
+  }
+}
 
-
+// function removeEnds(str) {
+//   if (str.length < 3) return ''
+//   let result = ''
+//   for (let index = 1; index < str.length - 1; index++) {
+//     result += str.charAt(index)
+//   }
+//   return result
+// }
+// above return everything but first and last chars. unlike first which takes away first and last chars. without returning a new string
 
 
 
@@ -260,7 +275,13 @@ charCount('hello') //=> { h: 1, e: 1, l: 2, o: 1 }
 charCount('Today is fantastic!') //=> { T: 1, o: 1, d: 1, a: 3, y: 1, ' ': 2, i: 2, s: 2, f: 1, n: 1, t: 2, c: 1, '!': 1 }
 -----------------------------------------------------------------------------*/
 // Your solution for 09-charCount here:
-
+function charCount(str) {
+  let count = {}
+  for (const num of str) {
+    count[num] = count[num] ? count[num] + 1 : 1;
+  }
+  return count
+}
 
 
 
@@ -286,7 +307,9 @@ formatWithPadding(42, '*', 10); //=> "********42"
 formatWithPadding(1234, '*', 3); //=> "1234"
 -----------------------------------------------------------------------------*/
 // Your solution for 10-formatWithPadding here:
-
+function formatWithPadding(num, str, num2) { 
+  return num.toFixed(0).padStart(num2, str)
+}
 
 
 
