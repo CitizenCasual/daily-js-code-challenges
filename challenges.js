@@ -283,6 +283,15 @@ function charCount(str) {
   return count
 }
 
+function charCount(str) {
+	resultObj = str.split("").reduce((countObj, char) => {
+		char in countObj ? countObj[char]++ : (countObj[char] = 1);
+		return countObj;
+	}, {});
+	return resultObj;
+}
+
+
 
 
 
@@ -306,9 +315,14 @@ formatWithPadding(123, '0', 5); //=> "00123"
 formatWithPadding(42, '*', 10); //=> "********42"
 formatWithPadding(1234, '*', 3); //=> "1234"
 -----------------------------------------------------------------------------*/
-// Your solution for 10-formatWithPadding here:
-function formatWithPadding(num, str, num2) { 
-  return num.toFixed(0).padStart(num2, str)
+
+
+function formatWithPadding(num, str, lgth) {
+  if (num.length >= lgth) {
+    return num.toString()
+  } else {
+    return num.toString().padStart(lgth, str)
+  }
 }
 
 
@@ -334,7 +348,21 @@ isPalindrome('A nut for a jar of tuna'); //=> true
 isPalindrome(''); //=> true
 -----------------------------------------------------------------------------*/
 // Your solution for 11-isPalindrome here:
+// function isPalindrome(str) {
+//   let revrStr = str.split('').reverse().join('')
+//   let str2 = revrStr.split().reverse(' ').join()
+//   let check = str2 === str ? true : false
+//   return check
+// }
 
+function isPalindrome(str) {
+  str = str.toLowerCase()
+  while (str.includes(' ')) str = str.replace(' ', '')
+  for (var i = 0; i < Math.floor(str.length / 2); i++) {
+    if (str.charAt(i) !== str.charAt(str.length - i - 1)) return false
+  }
+  return true;
+}
 
 
 
@@ -360,7 +388,19 @@ hammingDistance('!!!!', '****'); //=> 4
 hammingDistance('abc', 'ab'); //=> NaN
 -----------------------------------------------------------------------------*/
 // Your solution for 12-hammingDistance here:
-
+function hammingDistance(str1, str2) {
+  let result = 0
+  if (str1.length === str2.length) {
+    for (let index = 0; index < str1.length; index++) {
+      if (str1[index] != str2[index]) {
+        result++
+      }
+    }
+    return result
+  } else {
+    return NaN
+  }
+}
 
 
 
@@ -384,6 +424,13 @@ mumble('121'); //=> '1-22-111'
 mumble('!A 2'); //=> '!-AA-   -2222'
 -----------------------------------------------------------------------------*/
 // Your solution for 13-mumble here:
+function mumble(str) {
+  let strSpl = str.split('')
+  let newArr = strSpl.map((el, i) => 
+    el.repeat(i+1))
+  return newArr.join('-')
+}
+
 
 
 
@@ -406,7 +453,13 @@ fromPairs([ ['a', 1], ['b', 2], ['c', 3] ]) //=> { a: 1, b: 2, c: 3 }
 fromPairs([ ['name', 'Sam"], ['age', 24], ['name', 'Sally'] ]) //=> { name: "Sally", age: 24 }
 -----------------------------------------------------------------------------*/
 // Your solution for 14-fromPairs here:
-
+function fromPairs(nestedArr) {
+  let obj = {}
+  nestedArr.forEach(arr => {
+    obj[arr[0]] = arr[1]
+  })
+  return obj
+}
 
 
 
@@ -428,7 +481,10 @@ mergeObjects({a: 1, b: 2, c: 3}, {d: 4}); //=> {a: 1, b: 2, c: 3, d: 4}
 mergeObjects({a: 1, b: 2, c: 3}, {d: 4}, {b: 22, d: 44}); //=> {a: 1, b: 22, c: 3, d: 44}
 -----------------------------------------------------------------------------*/
 // Your solution for 15-mergeObjects here:
-
+function mergeObjects(obj1, obj2, obj3) {
+  let obj = Object.assign(obj1, obj2, obj3)
+  return obj
+}
 
 
 
@@ -467,6 +523,9 @@ findHighestPriced([
 -----------------------------------------------------------------------------*/
 // Your solution for 16-findHighestPriced here:
 
+function findHighestPriced(arr) {
+  return arr.reduce((prev, curr) => curr.price > prev.price ? curr : prev)
+}
 
 
 
@@ -498,7 +557,14 @@ mapArray( ['rose', 'tulip', 'daisy'], function(f, i) {
 //=> ["1 - rose", "2 - tulip", "3 - daisy"]
 -----------------------------------------------------------------------------*/
 // Your solution for 17-mapArray here:
-
+function mapArray(arr, funct) {
+  let newArr = []
+  for (let index = 0; index < arr.length; index++) {
+    const outcome = funct(arr[index], index , arr)
+    newArr.push(outcome)
+  }
+  return newArr
+}
 
 
 
