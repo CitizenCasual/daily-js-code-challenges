@@ -602,8 +602,12 @@ reduceArray( ['Yes', 'No', 'Yes', 'Maybe'], function(acc, v) {
 //=> {"Yes": 2, "No": 1, "Maybe": 1}
 -----------------------------------------------------------------------------*/
 // Your solution for 18-reduceArray here:
-
-
+function reduceArray(arr, func, acc) {
+  arr.forEach(function(ele, i) {
+    acc = func(acc, ele, i)
+  })
+  return acc
+}
 
 
 
@@ -633,7 +637,18 @@ flatten( [1, [2, [3, [4]]], 1, 'a', ['b', 'c']] );
 //=> [1, 2, 3, 4, 1, 'a', 'b', 'c']
 -----------------------------------------------------------------------------*/
 // Your solution for 19-flatten here:
-
+function flatten(arr) {
+  let flattened = []
+  arr.forEach(ele => {
+    if(Array.isArray(ele)) {
+      const result = flatten(ele)
+      result.forEach(ele => flattened.push(ele))
+    } else {
+      flattened.push(ele)
+    }
+  })
+  return flattened
+}
 
 
 
@@ -657,7 +672,13 @@ isPrime(29) //=> true
 isPrime(200) //=> false
 -----------------------------------------------------------------------------*/
 // Your solution for 20-isPrime here:
-
+function isPrime(int) {
+  if (int <= 1 || int % 1 !== 0) return false
+  let sqrt = Math.sqrt(int)
+  for (let i = 2; i <= sqrt; i++)
+    if (int % 2 === 0) return false
+  return true
+}
 
 
 
@@ -685,6 +706,22 @@ primeFactors(105) //=> [3, 5, 7]
 primeFactors(200) //=> [2, 2, 2, 5, 5]
 -----------------------------------------------------------------------------*/
 // Your solution for 21-primeFactors here:
+function primeFactors(num) {
+  let factors = []
+  if (num < 2  || !Number.isInteger(num)) return factors
+  let divisor = 2
+  while (num >= divisor * divisor) {
+    if (Number.isInteger(num / divisor)) {
+      factors.push(divisor)
+      num = num / divisor
+    } else {
+      divisor ++
+    }
+  }
+  factors.push(num)
+  return factors
+}
+  
 
 
 
@@ -710,7 +747,25 @@ intersection(['a', 1], [true, 'a', 15]) //=> ['a']
 intersection([1, 'a', true, 1, 1], [true, 1, 'b', 1]) //=> [1, true, 1]
 -----------------------------------------------------------------------------*/
 // Your solution for 22-intersection here:
+// function intersection(x, y) {
+//   let result = []
+//   let _y = [...y]
+//   x.forEach(value => {
+//     let index = _y.indexOf(value)
+//     if (index > -1) result.push(_y.splice(index, 1)[0])
+//   })
+//   return result
+// }
 
+function intersection(arr1, arr2) {
+  let result = []
+  arr2.forEach(ele => {
+    if (arr1.includes(ele)) {
+      result.push(ele)
+    }
+  })
+  return result
+}
 
 
 
@@ -736,7 +791,16 @@ balancedBrackets( '[(])' ) // => false
 balancedBrackets( '[({}[])]' ) // => true
 -----------------------------------------------------------------------------*/
 // Your solution for 23-balancedBrackets here:
-
+function balancedBrackets(str) {
+  let stack = []
+  return str.split('').every(b => {
+    if ('([{'.includes(b)) {
+      return stack.push(b)
+    } else {
+      return '() {} []'.includes(stack.pop() + b)
+    }
+  })
+}
 
 
 
@@ -766,7 +830,11 @@ isWinningTicket( [ ['ABC', 66], ['dddd', 100], ['Hello', 108] ] ) // => true
 isWinningTicket( [ ['ABC', 66], ['dddd', 15], ['Hello', 108] ] ) // => false
 -----------------------------------------------------------------------------*/
 // Your solution for 24-isWinningTicket here:
-
+function isWinningTicket(ticket) {
+  return ticket.every(function(arr) {
+    return arr[0].includes(String.fromCharCode(arr[1]))
+  })
+}
 
 
 
@@ -797,6 +865,10 @@ getNumForIP( '10.0.0.1' ) // => 167772161
 -----------------------------------------------------------------------------*/
 // Your solution for 25-getNumForIP here:
 
+function getNumForIP(ip) {
+  return ip.split('.').reduce((prev, curr) => prev * 256 + +curr)
+}
+
 
 
 
@@ -825,7 +897,9 @@ toCamelCase( 'Mama-mia' ) // => 'MamaMia'
 toCamelCase( 'A_b_c' ) // => 'ABC'
 -----------------------------------------------------------------------------*/
 // Your solution for 26-toCamelCase here:
-
+function toCamelCase(str) {
+  return str.replace(/[_-]\w/g, match => match.charAt(1).toUpperCase())
+}
 
 
 
@@ -855,7 +929,14 @@ countTheBits( 255 ) //=> 8
 countTheBits( 65535 ) //=> 16
 -----------------------------------------------------------------------------*/
 // Your solution for 27-countTheBits here:
-
+function countTheBits(int) {
+  let binary = int.toString(2)
+  let result = 0
+  binary.split('').forEach(ele => {
+    if (ele === '1') result++
+  })
+  return result
+}
 
 
 
@@ -884,7 +965,22 @@ gridTrip( [10, 5], 'D5L15U2' ) //-> [-5, 2]
 gridTrip( [100, -22], 'L2L15D50U1D9') //=> [83, -80]
 -----------------------------------------------------------------------------*/
 // Your solution for 28-gridTrip here:
-
+function gridTrip(arr, direc) {
+  let result = [arr[0], arr[1]]
+  const lookup = {'R': [0, 1], 'U': [1, 1], 'L': [0, -1], 'D': [1, -1]}
+  let index = 0
+  while (index < direc.length) {
+    let dir = direc[index]
+    index++
+    let numString = ''
+    while ('0123456789'.includes(direc[index]) && index < direc.length) {
+      numString += direc[index]
+      index++
+    }
+    result[lookup[dir][0]] += numString * lookup[dir][1]
+  }
+  return result
+}
 
 
 
@@ -914,7 +1010,18 @@ addChecker( [10, 15, 16, 22], 32 ) // => true
 addChecker( [10, 15, 16, 22], 19 ) // => false
 -----------------------------------------------------------------------------*/
 // Your solution for 29-addChecker here:
-
+function addChecker(ints, total) {
+  let result = false
+  let start = 0
+  let end = ints.length - 1
+  while (start < end) {
+    let sum = ints[start] + ints[end]
+    if (sum === total) return true
+    sum < total ? start++: end--
+  }
+  return result
+  
+}
 
 
 
@@ -946,5 +1053,8 @@ totalTaskTime( [2, 2, 3, 3, 4, 4], 2 ) //=> 9
 totalTaskTime( [5, 2, 6, 8, 7, 2], 3 ) // => 12
 -----------------------------------------------------------------------------*/
 // Your solution for 30- here:
-
+function totalTaskTime(tasks, threads) {
+  return tasks.length && Math.max(...tasks.reduce((b, t, i) => 
+  (b[b.indexOf(Math.min(...b))] += t) && b, tasks.splice(0, threads)))
+}
 
